@@ -1,5 +1,7 @@
 import { Hono } from "hono";
+import { Loro } from "loro-crdt";
 import { upgradeWebSocket } from "hono/cloudflare-workers";
+import { createNewGame } from "../state";
 import { getDB } from "../db/query";
 import { games } from "../db/schema";
 import { Context } from "../types";
@@ -7,13 +9,11 @@ import { Context } from "../types";
 const app = new Hono<Context>();
 
 app.get("/new", async (c) => {
-	// TODO: Create a game in the DB
-
 	const db = getDB(c);
 	const game = await db
 		.insert(games)
 		.values({
-			state: new Uint8Array(), // TODO: Use empty LORO state
+			state: createNewGame().exportSnapshot(),
 		})
 		.returning();
 
@@ -68,5 +68,28 @@ app.get(
 		};
 	}),
 );
+
+// Alternative to the websockets we could do a polling endpoint
+app.get("/:id/updates/", async (c) => {
+	const id = parseInt(c.req.param("id"), 10);
+	const db = getDB(c);
+	const game = await db.query.games.findFirst({
+		where: (users, { eq }) => eq(users.id, id),
+	});
+	if (!game) {
+		return c.notFound();
+	}
+
+	const gameState = new Loro();
+	gameState.import(game.state);
+
+	const startQuery = c.req.query("start");
+	let versionVector: any = undefined;
+	if (startQuery) {
+		versionVector = JSON.parse(decodeURIComponent(startQuery));
+	}
+
+	return c.json(gameState.exportJsonUpdates(versionVector));
+});
 
 export default app;
