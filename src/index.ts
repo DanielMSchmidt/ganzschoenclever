@@ -1,9 +1,10 @@
-import { Hono } from 'hono'
+import { Hono } from "hono";
+import Start from "./routes/start";
+import Game from "./routes/game";
+const app = new Hono();
 
-const app = new Hono()
+app.get("/", (c) => c.redirect("/start"));
+app.route("/start", Start);
+app.route("/game", Game);
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
-
-export default app
+export default app;

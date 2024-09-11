@@ -1,6 +1,17 @@
 name = "ganzschoenclever"
 compatibility_date = "2024-09-11"
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = ["nodejs_compat"]
+
+# [env.preview]
+# d1_databases = [
+#     { binding = "DB", database_name = "dancesporttournamentfinder-preview", database_id = "904f49ed-3643-424e-8518-aee21a58820e", preview_database_id = "904f49ed-3643-424e-8518-aee21a58820e", migrations_dir = "migrations" },
+# ]
+# browser = { binding = "MYBROWSER" }
+
+# [env.production]
+# d1_databases = [
+#     { binding = "DB", database_name = "dancesporttournamentfinder", database_id = "fef9ce6b-dd54-4c52-ac08-18653a884416", migrations_dir = "migrations" },
+# ]
 
 # [vars]
 # MY_VAR = "my-variable"
@@ -13,10 +24,11 @@ compatibility_flags = [ "nodejs_compat" ]
 # binding = "MY_BUCKET"
 # bucket_name = "my-bucket"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "ganzschoenclever"
+database_id = "57f0a7cf-bcc9-4f03-bb27-df1a7a5304a4"
+migrations_dir = "migrations"
 
 # [ai]
 # binding = "AI"

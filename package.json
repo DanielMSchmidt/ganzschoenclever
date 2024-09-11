@@ -1,16 +1,33 @@
 {
-    "name": "ganzschoenclever",
-    "scripts": {
-        "dev": "wrangler dev src/index.ts",
-        "deploy": "wrangler deploy --minify src/index.ts",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "dependencies": {
-        "hono": "^4.6.1"
-    },
-    "devDependencies": {
-        "@cloudflare/workers-types": "^4.20240529.0",
-        "wrangler": "^3.57.2"
-    },
-    "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+	"name": "ganzschoenclever",
+	"scripts": {
+		"deploy": "wrangler deploy --minify src/index.ts",
+		"dev": "wrangler dev src/index.ts",
+		"format": "npx prettier --write .",
+		"generate": "drizzle-kit generate",
+		"lint": "npx prettier --check .",
+		"migration:apply": "wrangler d1 migrations apply DB --local",
+		"migration:list": "wrangler d1 migrations list DB --local",
+		"prepare": "husky && husky install",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"drizzle-orm": "^0.33.0",
+		"hono": "^4.6.1",
+		"loro-crdt": "^0.16.12"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20240529.0",
+		"@types/node": "^22.5.4",
+		"drizzle-kit": "^0.24.2",
+		"husky": "^9.1.5",
+		"lint-staged": "^15.2.10",
+		"prettier": "^3.3.3",
+		"wrangler": "^3.57.2"
+	},
+	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+	"lint-staged": {
+		"*.{js,css,md,json}": "prettier --write",
+		"*.{js,css,md}": "prettier --write"
+	}
 }
