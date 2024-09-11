@@ -1,20 +1,20 @@
 name: Hono Deploy
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        name: Deploy
-        steps:
-            - uses: actions/checkout@v4
-            - name: Deploy
-              uses: cloudflare/wrangler-action@v3
-              with:
-                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-                  preCommands: |
-                      echo "Running drizzle migrations"
-                      wrangler d1 migrations apply DB --env production
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          preCommands: |
+            echo "Running drizzle migrations"
+            wrangler d1 migrations apply DB --env production
