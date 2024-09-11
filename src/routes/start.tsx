@@ -1,7 +1,7 @@
 import { Hono } from "hono";
+import { Context } from "../types";
 
-const app = new Hono();
-
+const app = new Hono<Context>();
 app.get("/", (c) =>
 	c.html(
 		<div>

@@ -1,14 +1,23 @@
 import { Hono } from "hono";
-import { upgradeWebSocket, WebSocketContext } from "hono/cloudflare-workers";
+import { upgradeWebSocket } from "hono/cloudflare-workers";
+import { getDB } from "../db/query";
+import { games } from "../db/schema";
+import { Context } from "../types";
 
-const app = new Hono();
+const app = new Hono<Context>();
 
-app.get("/new", (c) => {
+app.get("/new", async (c) => {
 	// TODO: Create a game in the DB
-	//
 
-	const gameId = 42;
-	return c.redirect(`/game/${gameId}`);
+	const db = getDB(c);
+	const game = await db
+		.insert(games)
+		.values({
+			state: new Uint8Array(), // TODO: Use empty LORO state
+		})
+		.returning();
+
+	return c.redirect(`/game/${game[0].id}`);
 });
 app.get("/:id", (c) => {
 	// TODO: Navigating here should create a new player if the player is not already in the game
@@ -39,7 +48,7 @@ app.get("/:id/play", (c) => {
 // TODO: Not sure if sending based on DB update works, maybe polling is better?
 app.get(
 	"/:id/subscribe",
-	upgradeWebSocket((c: WebSocketContext) => {
+	upgradeWebSocket((c) => {
 		// TODO: Subscribe to the game state
 		let wsCtx;
 
