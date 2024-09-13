@@ -17,4 +17,4 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           preCommands: |
             echo "Running drizzle migrations"
-            wrangler d1 migrations apply DB --env production
+            wrangler d1 migrations apply DB
