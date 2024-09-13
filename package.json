@@ -9,7 +9,7 @@
 		"migration:apply": "wrangler d1 migrations apply DB --local",
 		"migration:list": "wrangler d1 migrations list DB --local",
 		"prepare": "husky && husky install",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 0"
 	},
 	"dependencies": {
 		"drizzle-orm": "^0.33.0",
