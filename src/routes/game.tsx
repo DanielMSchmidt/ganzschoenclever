@@ -1,10 +1,12 @@
 import { Hono } from "hono";
 import { Loro } from "loro-crdt";
-import { upgradeWebSocket } from "hono/cloudflare-workers";
+import { upgradeWebSocket, serveStatic } from "hono/cloudflare-workers";
+import manifest from "__STATIC_CONTENT_MANIFEST";
 import { createNewGame } from "../state";
 import { getDB } from "../db/query";
 import { games } from "../db/schema";
 import { Context } from "../types";
+import {} from "hono/cloudflare-workers";
 
 const app = new Hono<Context>();
 
@@ -37,13 +39,7 @@ app.get("/:id", (c) => {
 // TODO: I think the game needs to be a frontend UI so we can subscribe to the ws endpoint properly
 // Maybe deliver a separate app somehow
 // Also see https://hono.dev/docs/guides/rpc
-app.get("/:id/play", (c) => {
-	return c.html(
-		<div>
-			<h1>Playing the game</h1>
-		</div>,
-	);
-});
+app.get("/:id/play/*", serveStatic({ root: "./", manifest }));
 
 // TODO: Not sure if sending based on DB update works, maybe polling is better?
 app.get(

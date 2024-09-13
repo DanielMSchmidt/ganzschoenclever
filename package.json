@@ -9,12 +9,16 @@
 		"migration:apply": "wrangler d1 migrations apply DB --local",
 		"migration:list": "wrangler d1 migrations list DB --local",
 		"prepare": "husky && husky install",
-		"test": "echo \"Error: no test specified\" && exit 0"
+		"test": "echo \"Error: no test specified\" && exit 0",
+		"ui:build": "vite build",
+		"ui:dev": "vite src/ui",
+		"ui:preview": "vite preview"
 	},
 	"dependencies": {
 		"drizzle-orm": "^0.33.0",
 		"hono": "^4.6.1",
-		"loro-crdt": "^0.16.12"
+		"loro-crdt": "^0.16.12",
+		"vite": "^5.4.5"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240529.0",
@@ -23,7 +27,7 @@
 		"husky": "^9.1.5",
 		"lint-staged": "^15.2.10",
 		"prettier": "^3.3.3",
-		"wrangler": "^3.57.2"
+		"wrangler": "^3.77.0"
 	},
 	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
 	"lint-staged": {

@@ -1,6 +1,10 @@
 name = "ganzschoenclever"
 compatibility_date = "2024-09-11"
 compatibility_flags = ["nodejs_compat"]
+main = "workers-site/index.js"
+
+[site]
+bucket = "./src/ui"
 
 # [env.preview]
 # d1_databases = [
